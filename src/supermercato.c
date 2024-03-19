@@ -19,6 +19,9 @@ int main(int argc, char* argv[]){
     FILE *config_file;
     char* config_name;
 
+    // cancello il file di log se esiste
+    remove(LOGNAME);
+
     // Controllo gli argomenti
     while ((opt = getopt(argc, argv, "c:vh")) != -1) {
         switch (opt) {
@@ -83,6 +86,8 @@ int main(int argc, char* argv[]){
 
     // Creazione casse
     casse_list = (Cassa*) malloc(sizeof(Cassa)*config->K);
+
+    sleep(20);
 
 
 }

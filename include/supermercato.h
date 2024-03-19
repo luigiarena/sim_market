@@ -1,5 +1,6 @@
 #define BUF_SIZE 128
 #define PATH_SIZE 128
+#define LOGNAME "./log.txt"
 
 /*  Struttura che contiene i parametri di configurazione    */
 typedef struct Param {
