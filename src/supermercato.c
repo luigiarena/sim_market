@@ -21,17 +21,17 @@ int main(int argc, char* argv[]){
     FILE *config_file;
     char* config_name;
 
-    // Creo la maschera dei segnali
+    // Creazione della maschera dei segnali
     sigset_t mask;
     sigemptyset(&mask);
     sigaddset(&mask, SIGHUP);
     sigaddset(&mask, SIGQUIT);
     IFERRORNOT(pthread_sigmask(SIG_SETMASK, &mask, NULL), 0, "sigmask supermercato")
 
-    // Cancello il file di log se esiste
+    // Cancellazione del file di log se esiste
     remove(LOGNAME);
 
-    // Controllo gli argomenti
+    // Controllo degli argomenti
     while ((opt = getopt(argc, argv, "c:vh")) != -1) {
         switch (opt) {
             case 'c':
@@ -52,10 +52,10 @@ int main(int argc, char* argv[]){
     // TEST
     if(vflag==1) printf("nome file: %s\ncflag: %d\nvflag: %d\n", config_name, cflag, vflag);
 
-    // Provo ad aprile il file di configurazione
+    // Tentativo di aperture del file di configurazione
     IFERROR((config_file = fopen(config_name, "r")),NULL,"Aprendo il file di configurazione")
 
-    // Leggo i valori dei parametri e li salvo nella struttura Param
+    // Lettura dei valori dei parametri e memorizzazione nella struttura Param
     config = malloc(sizeof(Param));
     char buffer[BUF_SIZE];
     char* par; 
@@ -99,7 +99,7 @@ int main(int argc, char* argv[]){
     // Inizializzazione del direttore
     IFERRORNOT(pthread_create(&thDirettore, NULL, direttore_main, NULL), 0, "Pthread_create direttore")
 
-    // Creazione casse
+    // Creazione delle casse
     casse_list = (Cassa*) malloc(sizeof(Cassa)*config->K);
 
     sleep(20);
