@@ -99,11 +99,11 @@ int main(int argc, char* argv[]){
     Cassa casse[config->K];
 
     // Dichiarazione degli identificatori dei thread
-    pthread_t thDirettore;
-    pthread_t thCasse[config->K];
+    pthread_t th_Direttore;
+    pthread_t th_Casse[config->K];
 
     // Inizializzazione del direttore
-    IFERRORNOT(pthread_create(&thDirettore, NULL, direttore_main, NULL), 0, "Pthread_create direttore")
+    IFERRORNOT(pthread_create(&th_Direttore, NULL, direttore_main, NULL), 0, "Pthread_create direttore")
 
     // Creazione delle casse
     casse_list = (Cassa*) malloc(sizeof(Cassa)*config->K);
@@ -114,7 +114,7 @@ int main(int argc, char* argv[]){
     }
 
     for (int i = 0; i < config->K; i++) {
-        IFERRORNOT(pthread_create(&thCasse[i], NULL, cassa_main, &casse[i]), 0, "pthread_create cassa" )
+        IFERRORNOT(pthread_create(&th_Casse[i], NULL, cassa_main, &casse[i]), 0, "pthread_create cassa" )
     }
 
     sleep(6);
