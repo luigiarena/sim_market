@@ -87,14 +87,18 @@ int main(int argc, char* argv[]){
     }
 
     // TEST
-    printf("\n");
-    printf("Test: Param K ha val: %d\n", config->K);
+    WRITELN("")
+    // printf("Test: Param K ha val: %d\n", config->K);
 
     // Chiusura del file di configurazione
     IFERROR(fclose(config_file),-1,"Chiudendo il file di configurazione")
 
+    // Dichiarazione delle strutture
+    Cassa casse[config->K];
+
     // Dichiarazione degli identificatori dei thread
     pthread_t thDirettore;
+    pthread_t thCasse[config->K];
 
     // Inizializzazione del direttore
     IFERRORNOT(pthread_create(&thDirettore, NULL, direttore_main, NULL), 0, "Pthread_create direttore")
@@ -102,7 +106,16 @@ int main(int argc, char* argv[]){
     // Creazione delle casse
     casse_list = (Cassa*) malloc(sizeof(Cassa)*config->K);
 
-    sleep(20);
+    for (int i = 0; i < config->K; i++) {
+        casse[i].id = i;
+        casse[i].stato = 0;
+    }
+
+    for (int i = 0; i < config->K; i++) {
+        IFERRORNOT(pthread_create(&thCasse[i], NULL, cassa_main, &casse[i]), 0, "pthread_create cassa" )
+    }
+
+    sleep(6);
 
 
 }
