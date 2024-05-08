@@ -25,7 +25,7 @@ int main(int argc, char* argv[]){
     sigemptyset(&mask);
     sigaddset(&mask, SIGHUP);
     sigaddset(&mask, SIGQUIT);
-    IFERROR(pthread_sigmask(SIG_SETMASK, &mask, NULL), 0, "sigmask supermercato")
+    IFERRORNOT(pthread_sigmask(SIG_SETMASK, &mask, NULL), 0, "sigmask supermercato")
 
     // Cancello il file di log se esiste
     remove(LOGNAME);
