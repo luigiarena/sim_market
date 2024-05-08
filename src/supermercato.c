@@ -9,6 +9,7 @@
 
 #include "supermercato.h"
 #include "utils.h"
+#include "direttore.h"
 #include "cassa.h"
 
 Param *config;
@@ -92,7 +93,11 @@ int main(int argc, char* argv[]){
     // Chiusura del file di configurazione
     IFERROR(fclose(config_file),-1,"Chiudendo il file di configurazione")
 
+    // Dichiarazione degli identificatori dei thread
+    pthread_t thDirettore;
 
+    // Inizializzazione del direttore
+    IFERRORNOT(pthread_create(&thDirettore, NULL, direttore_main, NULL), 0, "Pthread_create direttore")
 
     // Creazione casse
     casse_list = (Cassa*) malloc(sizeof(Cassa)*config->K);
