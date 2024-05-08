@@ -20,6 +20,13 @@ int main(int argc, char* argv[]){
     FILE *config_file;
     char* config_name;
 
+    // Creo la maschera dei segnali
+    sigset_t mask;
+    sigemptyset(&mask);
+    sigaddset(&mask, SIGHUP);
+    sigaddset(&mask, SIGQUIT);
+    IFERROR(pthread_sigmask(SIG_SETMASK, &mask, NULL), 0, "sigmask supermercato")
+
     // Cancello il file di log se esiste
     remove(LOGNAME);
 
@@ -45,7 +52,7 @@ int main(int argc, char* argv[]){
     if(vflag==1) printf("nome file: %s\ncflag: %d\nvflag: %d\n", config_name, cflag, vflag);
 
     // Provo ad aprile il file di configurazione
-    IFERROR((config_file = fopen(config_name, "r")),NULL,"Opening configuration file")
+    IFERROR((config_file = fopen(config_name, "r")),NULL,"Aprendo il file di configurazione")
 
     // Leggo i valori dei parametri e li salvo nella struttura Param
     config = malloc(sizeof(Param));
@@ -83,7 +90,9 @@ int main(int argc, char* argv[]){
     printf("Test: Param K ha val: %d\n", config->K);
 
     // Chiusura del file di configurazione
-    IFERROR(fclose(config_file),-1,"Closing configuration file")
+    IFERROR(fclose(config_file),-1,"Chiudendo il file di configurazione")
+
+
 
     // Creazione casse
     casse_list = (Cassa*) malloc(sizeof(Cassa)*config->K);
