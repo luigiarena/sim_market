@@ -7,7 +7,7 @@ void* direttore_main(void* arg) {
     sigemptyset(&mask);
     sigaddset(&mask, SIGHUP);
     sigaddset(&mask, SIGQUIT);
-    IFERRORNOT(pthread_sigmask(SIG_SETMASK, &mask, NULL), 0, "sigmask supermercato")
+    IFERRORNOT(pthread_sigmask(SIG_SETMASK, &mask, NULL), 0, "sigmask direttore")
 
     // Stampa di un messaggio di avvio del direttore
     printf("Il direttore è pronto.\n");
