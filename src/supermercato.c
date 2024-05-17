@@ -97,6 +97,7 @@ int main(int argc, char* argv[]){
 
     // Dichiarazione delle strutture
     Cassa casse[config->K];
+    Direttore direttore;
 
     // Dichiarazione degli identificatori dei thread
     pthread_t th_Direttore;
