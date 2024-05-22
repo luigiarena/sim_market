@@ -1,6 +1,8 @@
 #define STDIN  0
 #define STDOUT 1
 #define STDERR 2
+#define CLOSE 0
+#define OPEN 1
 
 #define IFERROR(s,v,m) if((s)==v) {perror(m); exit(errno);}
 #define IFERROR3(s,v,m,c) if((s)==v) {perror(m); c;}
