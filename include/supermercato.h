@@ -2,6 +2,9 @@
 #define PATH_SIZE 128
 #define LOGNAME "./log.txt"
 
+// Variabile booleana per lo stato di apertura e chiusura del supermercaaato
+int stato_supermarket;
+
 /*  Struttura che contiene i parametri di configurazione    */
 typedef struct Param {
     int K;  // Numero max di casse aperte
