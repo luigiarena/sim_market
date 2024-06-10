@@ -17,6 +17,14 @@
 Param *config;
 Cassa *casse_list;
 
+// Dichiarazione delle variabili mutex e di condizione
+//pthread_mutex_t mtx_casse[];
+pthread_mutex_t mtx_direttore;
+
+pthread_cond_t cond_direttore;
+//pthread_cond_t casse_close;
+//pthread_cond_t casse_notifica;
+
 /* Funzione main del progetto */
 int main(int argc, char* argv[]){
     int opt, cflag = 0, vflag = 0;
@@ -103,7 +111,11 @@ int main(int argc, char* argv[]){
     pthread_t th_Direttore;
     pthread_t th_Casse[config->K];
 
+    // Inizializzazione delle variabili mutex e di condizione
+
+
     // Inizializzazione del direttore
+
     IFERRORNOT(pthread_create(&th_Direttore, NULL, direttore_main, NULL), 0, "Pthread_create direttore")
 
     // Creazione delle casse
@@ -111,7 +123,7 @@ int main(int argc, char* argv[]){
 
     for (int i = 0; i < config->K; i++) {
         casse[i].id = i;
-        casse[i].stato = 0;
+        casse[i].stato = CLOSE;     // inizialmente ogni cassa è inizializzata come chiusa
     }
 
     for (int i = 0; i < config->K; i++) {
